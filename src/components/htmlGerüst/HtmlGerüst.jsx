@@ -21,6 +21,7 @@ const counter = [];
 let count = 0;
 
 
+
 // sfc
 const HtmlGerüst = () => {
 
@@ -37,7 +38,7 @@ const HtmlGerüst = () => {
     // * 3 hook function
 
     function handelInputChange(event) {
-     
+
 
         count = count + 1;
         counter.push(count);
@@ -54,34 +55,48 @@ const HtmlGerüst = () => {
             setInputEmailVal(event.target.value)
         }
     }
-      
+
     console.log(counter)
     console.log(count);
 
+    const vornameArray = [];
+
+    function valuesBeiSendenButton(event) {
+        event.preventDefault();
+        console.log(inputVornameVal);
 
 
-    return (
-        <section className="sec_html">
-            <h2>Input</h2>
+        vornameArray.push(inputVornameVal);
+        console.log(vornameArray);
 
-            {/* // ! input */}
-            {/* // * 4 onChange für hook function */}
-            <input onChange={handelInputChange} type="text" name="vorname" id="vorname" placeholder="Vorname" />
-            <input onChange={handelInputChange} type="text" name="nachname" id="nachname" placeholder="Nachname" />
-            <input onChange={handelInputChange} type="email" name="email" id="email" placeholder="Email" />
-
-            <button>senden</button>
-
-
-            {/* // ! output */}
-            <HtmlSchablone text={h2_text} vorname={inputVornameVal} nachname={inputNachnameVal} email={inputEmailVal} ></HtmlSchablone>
-
-        </section>
+        HtmlGerüst.vornameArray = vornameArray;
+    }
 
 
 
-    );
+return (
+    <section className="sec_html">
+        <h2>Input</h2>
+
+        {/* // ! input */}
+        {/* // * 4 onChange für hook function */}
+        <input onChange={handelInputChange} type="text" name="vorname" id="vorname" placeholder="Vorname" />
+        <input onChange={handelInputChange} type="text" name="nachname" id="nachname" placeholder="Nachname" />
+        <input onChange={handelInputChange} type="email" name="email" id="email" placeholder="Email" />
+
+        <button onClick={valuesBeiSendenButton}>senden</button>
+
+
+        {/* // ! output */}
+        <HtmlSchablone text={h2_text} vorname={inputVornameVal} nachname={inputNachnameVal} email={inputEmailVal} ></HtmlSchablone>
+
+    </section>
+
+
+
+);
 }
+
 
 
 export default HtmlGerüst;
