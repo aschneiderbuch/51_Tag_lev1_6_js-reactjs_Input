@@ -2,16 +2,17 @@
 // * 1
 import { useState } from "react";
 
-
-
+// import uuid 
+import { v4 as uuidv4 } from "uuid";
 
 
 
 // import css
-import HtmlSchablone from "../htmlSchablone/HtmlSchablone";
+import HtmlSchablone from "../htmlSchablone/HtmlSchablone.jsx";
 import "./HtmlGerüst.scss"
 
 
+console.log(uuidv4());
 
 
 const h2_text = "Output";
@@ -38,7 +39,7 @@ const HtmlGerüst = () => {
     // * 3 hook function
 
     function handelInputChange(event) {
-
+event.preventDefault();
 
         count = count + 1;
         counter.push(count);
@@ -59,6 +60,25 @@ const HtmlGerüst = () => {
     console.log(counter)
     console.log(count);
 
+
+
+    class Bauplan_Obj {
+        constructor(id, date, vorname, nachname, email, uuid) {   // counter id
+            this.id = id;
+            this.date = date;
+            this.vorname = vorname;
+            this.nachname = nachname;
+            this.email = email;
+            this.uuid = uuid;
+
+        }
+        description() {
+            console.log(this.id, this.date, this.vorname, this.nachname, this.email, this.uuid)
+        }
+    };
+
+
+
     const vornameArray = [];
 
     function valuesBeiSendenButton(event) {
@@ -66,37 +86,41 @@ const HtmlGerüst = () => {
         console.log(inputVornameVal);
 
 
-        vornameArray.push(inputVornameVal);
+        const obj = new Bauplan_Obj(counter, new Date(), inputVornameVal, inputNachnameVal, inputEmailVal, uuidv4());
+
+        // !!!  Probleme     vornameArray wird immer gelöscht wenn input eingabe
+        // !!! wie kann vornameArray exportiert werden?
+
+        vornameArray.push(obj)
+
         console.log(vornameArray);
 
-        HtmlGerüst.vornameArray = vornameArray;
     }
 
 
 
-return (
-    <section className="sec_html">
-        <h2>Input</h2>
+    return (
+        <section className="sec_html">
+            <h2>Input</h2>
 
-        {/* // ! input */}
-        {/* // * 4 onChange für hook function */}
-        <input onChange={handelInputChange} type="text" name="vorname" id="vorname" placeholder="Vorname" />
-        <input onChange={handelInputChange} type="text" name="nachname" id="nachname" placeholder="Nachname" />
-        <input onChange={handelInputChange} type="email" name="email" id="email" placeholder="Email" />
+            {/* // ! input */}
+            {/* // * 4 onChange für hook function */}
+            <input onChange={handelInputChange} type="text" name="vorname" id="vorname" placeholder="Vorname" />
+            <input onChange={handelInputChange} type="text" name="nachname" id="nachname" placeholder="Nachname" />
+            <input onChange={handelInputChange} type="email" name="email" id="email" placeholder="Email" />
 
-        <button onClick={valuesBeiSendenButton}>senden</button>
-
-
-        {/* // ! output */}
-        <HtmlSchablone text={h2_text} vorname={inputVornameVal} nachname={inputNachnameVal} email={inputEmailVal} ></HtmlSchablone>
-
-    </section>
+            <button onClick={valuesBeiSendenButton}>senden</button>
 
 
+            {/* // ! output */}
+            <HtmlSchablone text={h2_text} vorname={inputVornameVal} nachname={inputNachnameVal} email={inputEmailVal} ></HtmlSchablone>
 
-);
+        </section>
+
+
+
+    );
 }
-
 
 
 export default HtmlGerüst;
